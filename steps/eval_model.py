@@ -5,5 +5,5 @@ from zenml import step
 
 
 @step
-def eval_model(model : callable , data) -> None:
+def eval_model(model : str , data : pd.DataFrame) -> pd.DataFrame | None:
     pass

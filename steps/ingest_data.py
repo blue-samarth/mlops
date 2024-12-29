@@ -25,7 +25,7 @@ class IngestData():
         return pd.read_csv(self.data_path)
     
 @step
-def ingest_df(data_path: str) -> pd.DataFrame:
+def ingest_df(data_path: str) -> pd.DataFrame | None:
     """
     Ingests data from a given path (CSV file)
     Args:

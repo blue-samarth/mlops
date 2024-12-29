@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# error logs
+error.txt
