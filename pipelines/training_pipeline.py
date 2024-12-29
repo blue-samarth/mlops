@@ -6,9 +6,9 @@ from steps.clean_data import clean_df
 from steps.model_train import train_model
 from steps.eval_model import eval_model
 
-@pipeline
+@pipeline()
 def train_pipeline(data_path : str) -> None:
     df : DataFrame = ingest_df(data_path)
-    cleaned_df : DataFrame = clean_df(df)
-    train_model(cleaned_df)
-    eval_model("model" , cleaned_df)
+    clean_df(df)
+    train_model(df)
+    eval_model(df)

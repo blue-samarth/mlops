@@ -5,7 +5,7 @@ from zenml import step
 
 
 @step
-def clean_df(data: pd.DataFrame) -> pd.DataFrame | None:
+def clean_df(data: pd.DataFrame) ->  None:
     """
     Cleans the data by removing missing values
     Args:
