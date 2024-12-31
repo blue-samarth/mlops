@@ -1,6 +1,6 @@
 import logging
-from typing_extensions import Annotated
 from typing import Tuple
+from typing_extensions import Annotated
 
 import pandas as pd
 from zenml import step

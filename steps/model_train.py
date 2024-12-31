@@ -2,19 +2,17 @@ import logging
 
 import pandas as pd
 from zenml import step
+from sklearn.base import RegressorMixin
 
 from src.model_dev import LinearRegressionModel
-from sklearn.base import RegressorMixin
 from .config import ModelNameConfig
 
 @step
 def train_model(
-                X_train: pd.DataFrame,
-                X_test: pd.DataFrame,
-                y_train: pd.Series,
-                y_test: pd.Series,
-                config: ModelNameConfig
-                ) -> RegressorMixin:
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    config: ModelNameConfig
+    ) -> RegressorMixin | None:
     """
     Trains the model of the ingested data
     Args:
@@ -33,6 +31,7 @@ def train_model(
             return trained_model
         else:
             logging.error(f"Model {config.model_name} not found")
+            raise ValueError(f"Model {config.model_name} not supported")
     except Exception as e:
         logging.error(f"Error in training model: {e}")
         raise e

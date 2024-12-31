@@ -1,5 +1,5 @@
 import logging
-from abc import ABC, abstractmethod , Union
+from abc import ABC, abstractmethod 
 
 import numpy as np
 import pandas as pd
@@ -12,7 +12,7 @@ class DataStrategy(ABC):
     """
 
     @abstractmethod
-    def handle_data(self, data: pd.DataFrame) -> Union[pd.DataFrame , pd.Series]:
+    def handle_data(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
         """
         Cleans the data according to the strategy.
 
@@ -26,7 +26,7 @@ class DataPreProcessingStrategy(DataStrategy):
     """"
     Startegy for data preprocessing uses DataStrategy interface
     """
-    def handle_data(self, data: pd.DataFrame) -> Union[pd.DataFrame , pd.Series]:
+    def handle_data(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
         """
         Handle the data according to the strategy.
 
@@ -60,7 +60,7 @@ class DataDivideStrategy(DataStrategy):
     """
     Strategy for data splitting uses DataStrategy interface
     """
-    def handle_data(self, data: pd.DataFrame) -> Union[pd.DataFrame , pd.Series]:
+    def handle_data(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
         """
         Handle the data according to the strategy.
 
@@ -87,7 +87,7 @@ class DataCleaning(DataStrategy):
         self.data = data
         self._strategy = strategy
     
-    def handle_data(self) -> Union[pd.DataFrame , pd.Series]:
+    def handle_data(self) -> pd.DataFrame | pd.Series:
         try:
             return self._strategy.handle_data(self.data)
         except Exception as e:
