@@ -5,13 +5,15 @@ from zenml import step
 
 from src.model_dev import LinearRegressionModel
 from sklearn.base import RegressorMixin
+from .config import ModelNameConfig
 
 @step
-def train_model(self,
+def train_model(
                 X_train: pd.DataFrame,
                 X_test: pd.DataFrame,
                 y_train: pd.Series,
                 y_test: pd.Series,
+                config: ModelNameConfig
                 ) -> RegressorMixin:
     """
     Trains the model of the ingested data
@@ -24,7 +26,13 @@ def train_model(self,
         RegressorMixin: Trained model
     """
     try:
-        pass
+        model = None
+        if config.model_name == 'LinearRegressionModel':
+            model = LinearRegressionModel()
+            trained_model = model.train_model(X_train, y_train)
+            return trained_model
+        else:
+            logging.error(f"Model {config.model_name} not found")
     except Exception as e:
         logging.error(f"Error in training model: {e}")
         raise e

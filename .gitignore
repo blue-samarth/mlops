@@ -11,3 +11,5 @@ wheels/
 
 # error logs
 error.txt
+
+.ruff_cashe
