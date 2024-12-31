@@ -1,7 +1,7 @@
-from zenml.steps import BaseParameters
+from pydantic import BaseModel
 
-class ModelNameConfig(BaseParameters):
+class ModelNameConfig(BaseModel):
     """
     Model name configuration
     """
-    model_name: str = 'LinearRegressionModel'
+    model_name_field: str = 'LinearRegressionModel'

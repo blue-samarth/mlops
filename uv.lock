@@ -760,6 +760,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pandas" },
+    { name = "pydantic" },
     { name = "scikit-learn" },
     { name = "zenml", extra = ["server"] },
 ]
@@ -767,6 +768,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "pandas", specifier = ">=2.2.3" },
+    { name = "pydantic", specifier = ">=2.8.2" },
     { name = "scikit-learn", specifier = ">=1.6.0" },
     { name = "zenml", extras = ["server"], specifier = ">=0.71.0" },
 ]

@@ -11,7 +11,7 @@ from .config import ModelNameConfig
 def train_model(
     X_train: pd.DataFrame,
     y_train: pd.Series,
-    config: ModelNameConfig
+    config: ModelNameConfig = ModelNameConfig()
     ) -> RegressorMixin | None:
     """
     Trains the model of the ingested data
@@ -25,7 +25,7 @@ def train_model(
     """
     try:
         model = None
-        if config.model_name == 'LinearRegressionModel':
+        if config.model_name_field == 'LinearRegressionModel':
             model = LinearRegressionModel()
             trained_model = model.train_model(X_train, y_train)
             return trained_model
