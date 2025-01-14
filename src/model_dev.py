@@ -1,7 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Tuple , Optional
-from typing_extensions import Annotated
+from typing import Tuple 
+# from typing_extensions import Annotated
 
 from sklearn.linear_model import LinearRegression
 from sklearn.base import BaseEstimator
