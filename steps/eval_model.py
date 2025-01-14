@@ -5,10 +5,14 @@ from typing_extensions import Annotated
 import pandas as pd
 from zenml import step
 from sklearn.base import RegressorMixin
+import mlflow
+from zenml.client import Client
 
-from src.evaluation import R2 , RMSE
+from src.evaluation import MSE , R2 , RMSE
 
-@step
+tracker : Client = Client().active_stack.experimental_tracker
+
+@step(experiment_tracker=tracker.name)
 def eval_model(model: RegressorMixin, 
                X_test: pd.DataFrame | pd.Series ,
                y_test: pd.DataFrame | pd.Series
@@ -27,9 +31,13 @@ def eval_model(model: RegressorMixin,
     """
     try:
         predictions = model.predict(X_test)
-        # mse = MSE().calculate_scores(y_test, predictions)
+        mse = MSE().calculate_scores(y_test, predictions)
         r2 = R2().calculate_scores(y_test, predictions)
         rmse = RMSE().calculate_scores(y_test, predictions)
+
+        mlflow.log_metric("MSE", mse)
+        mlflow.log_metric("R2", r2)
+        mlflow.log_metric("RMSE", rmse)
 
         return r2 , rmse
     except Exception as e:
