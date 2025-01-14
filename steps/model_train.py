@@ -9,7 +9,7 @@ from zenml.client import Client
 from src.model_dev import LinearRegressionModel
 from .config import ModelNameConfig
 
-tracker : Client = Client().active_stack.experimental_tracker
+tracker : Client = Client().active_stack.experiment_tracker
 
 @step(experiment_tracker=tracker.name)
 def train_model(

@@ -10,7 +10,7 @@ from zenml.client import Client
 
 from src.evaluation import MSE , R2 , RMSE
 
-tracker : Client = Client().active_stack.experimental_tracker
+tracker : Client = Client().active_stack.experiment_tracker
 
 @step(experiment_tracker=tracker.name)
 def eval_model(model: RegressorMixin, 
