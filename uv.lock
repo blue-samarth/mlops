@@ -1161,6 +1161,7 @@ dependencies = [
     { name = "mlflow" },
     { name = "pandas" },
     { name = "pydantic" },
+    { name = "rich" },
     { name = "scikit-learn" },
     { name = "zenml", extra = ["server"] },
 ]
@@ -1171,6 +1172,7 @@ requires-dist = [
     { name = "mlflow", specifier = ">=2.19.0" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "pydantic", specifier = ">=2.8.2" },
+    { name = "rich", specifier = ">=13.9.4" },
     { name = "scikit-learn", specifier = ">=1.6.0" },
     { name = "zenml", extras = ["server"], specifier = ">=0.71.0" },
 ]
