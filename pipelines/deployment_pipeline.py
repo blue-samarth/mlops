@@ -34,7 +34,7 @@ def trigger_deployment( accuracy : float , config: DeploymentTriggerConfig) -> b
     return accuracy >= config.min_accuracy
 
 @pipeline(enable_cache=False, settings={"docker": docker_settings})
-def continuous_deployment_pipeline(data_path : str,
+def continuous_deployment_pipeline(
                                    min_accuracy : float = 0.92,
                                    workers : int = 1,
                                    timeout : int = DEFAULT_SERVICE_START_STOP_TIMEOUT
@@ -43,7 +43,7 @@ def continuous_deployment_pipeline(data_path : str,
     Continuous deployment pipeline.
     """
     try:
-        df : pd.DataFrame = ingest_df(data_path)
+        df : pd.DataFrame = ingest_df()
         X_train , X_test , y_train , y_test = clean_df(df)
         model = train_model(X_train , y_train)
         r2 , mse = eval_model(model , X_test , y_test)

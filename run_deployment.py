@@ -33,11 +33,10 @@ DEPLOY_AND_PREDICT : str = "deploy_and_predict"
     default=0.92, 
     help="Minimum accuracy for deployment.")
 
-def run_deployment(data_path : str, config : str, min_accuracy : float) -> None:
+def run_deployment(config : str, min_accuracy : float) -> None:
     """
     Run the MLFlow deployment pipeline.
     Args:
-        data_path: Path to the data file.
         config: Deployment configuration.
         min_accuracy: Minimum accuracy for deployment.
     """
@@ -52,7 +51,6 @@ def run_deployment(data_path : str, config : str, min_accuracy : float) -> None:
     if deploy:
         print("Deploying model...")
         continuous_deployment_pipeline(
-            data_path=data_path,
             min_accuracy=min_accuracy,
             workers=3,
             timeout=60
@@ -103,9 +101,7 @@ def main():
   Main function to run the deployment pipeline.
   """
   try:
-    data_path = "data/olist_customers_dataset.csv"
     run_deployment(
-        data_path=data_path,
         config=DEPLOY,
         min_accuracy=0.92
     )

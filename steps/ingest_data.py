@@ -25,7 +25,7 @@ class IngestData():
         return pd.read_csv(self.data_path)
     
 @step
-def ingest_df(data_path: str) -> pd.DataFrame | None:
+def ingest_df(data_path: str|None = None) -> pd.DataFrame | None:
     """
     Ingests data from a given path (CSV file)
     Args:
@@ -35,6 +35,8 @@ def ingest_df(data_path: str) -> pd.DataFrame | None:
     Raises:
         FileNotFoundError: If the file is not found
     """
+    if not data_path:
+        data_path = "data/olist_customers_dataset.csv"
     try:
         return IngestData(data_path).get_data()
     except FileNotFoundError:
