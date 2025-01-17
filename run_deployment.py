@@ -6,7 +6,7 @@ from zenml.integrations.mlflow.mlflow_utils import get_tracking_uri
 from zenml.integrations.mlflow.model_deployers.mlflow_model_deployer import MLFlowModelDeployer
 from zenml.integrations.mlflow.services.mlflow_deployment import MLFlowDeploymentService
 
-from pipelines.deployment_pipeline import continous_deployement_pipeline
+from pipelines.deployment_pipeline import continous_deployment_pipeline
 
 DEPLOY : str = "deploy"
 PREDICT : str = "predict"
@@ -30,7 +30,7 @@ def run_deployment(data_path : str, config : str, min_accuracy : float):
 
     if deploy:
         print("Deploying model...")
-        continous_deployement_pipeline(data_path=data_path,
+        continous_deployment_pipeline(data_path=data_path,
                                        min_accuracy=min_accuracy,
                                        workers=3,
                                        timeout=60)
@@ -38,8 +38,6 @@ def run_deployment(data_path : str, config : str, min_accuracy : float):
         print("Model deployed successfully.")
     if predict:
         print("Predicting using the model...")
-        # mlflow_service = MLflowDeploymentService(tracking_uri=get_tracking_uri())
-        # mlflow_service.predict()
         print("Prediction done.")
     print(
         "You can now run"
@@ -55,7 +53,7 @@ def run_deployment(data_path : str, config : str, min_accuracy : float):
     )
 
     if existing_services:
-        service : MLflowDeploymentService = cast(MLflowDeploymentService, existing_services[0])
+        service : MLFlowDeploymentService = cast(MLFlowDeploymentService, existing_services[0])
         print("Model server found.")
         if service.is_running():
             print(
