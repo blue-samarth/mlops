@@ -35,7 +35,7 @@ def trigger_deployment( accuracy : float , config: DeploymentTriggerConfig) -> b
 
 @pipeline(enable_cache=False, settings={"docker": docker_settings})
 def continuous_deployment_pipeline(data_path : str,
-                                   min_accuracy : float, = 0.92,
+                                   min_accuracy : float = 0.92,
                                    workers : int = 1,
                                    timeout : int = DEFAULT_SERVICE_START_STOP_TIMEOUT
                                    ) -> None:
