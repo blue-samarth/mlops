@@ -33,7 +33,7 @@ def trigger_deployment( accuracy : float , config: DeploymentTriggerConfig) -> b
     """
     return accuracy >= config.min_accuracy
 
-@pipeline(enable_cache=False, settings={"docker": docker_settings})
+@pipeline(enable_cache=True, settings={"docker": docker_settings})
 def continuous_deployment_pipeline(
                                    min_accuracy : float = 0.92,
                                    workers : int = 1,
@@ -51,7 +51,7 @@ def continuous_deployment_pipeline(
 
         deployment_decision = trigger_deployment(
                                 accuracy=r2,
-                                config=DeploymentTriggerConfig(min_accuracy=min_accuracy)
+                                config=DeploymentTriggerConfig()
                                 )
 
         mlflow_model_deployer_step(model=model,

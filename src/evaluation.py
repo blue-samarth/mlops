@@ -55,8 +55,9 @@ class  R2(Evaluation):
         """
         try:
             logging.info('Calculating R2 score')
-            r2 = r2_score(y_true, y_pred)
+            r2 = float(r2_score(y_true, y_pred))
             logging.info(f"R2 Score: {r2}")
+            print(f"R² Score: {r2:.4f}")
             return r2
         except Exception as e:
             logging.error(f"Error in calculating R2 score: {e}")

@@ -14,12 +14,6 @@ PREDICT : str = "predict"
 DEPLOY_AND_PREDICT : str = "deploy_and_predict"
 
 @click.command()
-@click.option(
-    "--data-path", 
-    type=click.Path(exists=True), 
-    required=True, 
-    help="Path to the data file."
-  )
 @click.option("--config" , "-c",
               type=click.Choice([DEPLOY , PREDICT , DEPLOY_AND_PREDICT]),
               default=DEPLOY_AND_PREDICT,
@@ -61,7 +55,7 @@ def run_deployment(config : str, min_accuracy : float) -> None:
         print("Predicting using the model...")
         print("Prediction done.")
     print(
-        "You can now run"
+        "You can now run\n"
         f"[italic green]mlflow ui --backend-store-uri {get_tracking_uri()}[/italic green]"
         "\nto see the model in the MLflow UI.\n"
         "We can find our tracked runs within the `mlflow_pipeline` experiment."
@@ -95,22 +89,14 @@ def run_deployment(config : str, min_accuracy : float) -> None:
             print(
                 "The MLFLOW prediction service is not running."
             )
+    else:
+        print("No model server found.")
+        print(
+            "You can start the service by running"
+            f"[italic green]`zenml model-deployer model start`[/italic green]."
+        )
 
-def main():
-  """
-  Main function to run the deployment pipeline.
-  """
-  try:
-    run_deployment(
-        config=DEPLOY,
-        min_accuracy=0.92
-    )
-  except Exception as e:
-    print(f"Error in deployment pipeline: {e}")
-    return 1
-  return 0
-  
 
 if __name__ == "__main__":
-    main()
+    run_deployment()
   
