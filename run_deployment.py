@@ -55,10 +55,12 @@ def run_deployment(config : str, min_accuracy : float) -> None:
         print("Predicting using the model...")
         print("Prediction done.")
     print(
-        "You can now run\n"
-        f"[italic green]mlflow ui --backend-store-uri {get_tracking_uri()}[/italic green]"
-        "\nto see the model in the MLflow UI.\n"
-        "We can find our tracked runs within the `mlflow_pipeline` experiment."
+        "You can run:\n "
+        f"[italic green]    mlflow ui --backend-store-uri '{get_tracking_uri()}"
+        "[/italic green]\n ...to inspect your experiment runs within the MLflow"
+        " UI.\nYou can find your runs tracked within the "
+        "`mlflow_pipeline` experiment. There you'll also be able to "
+        "compare two or more runs.\n\n"
     )
 
     existing_services = mlflow_model_deployer_component.find_model_server(
@@ -70,7 +72,10 @@ def run_deployment(config : str, min_accuracy : float) -> None:
     if existing_services:
         service : MLFlowDeploymentService = cast(MLFlowDeploymentService, existing_services[0])
         print("Model server found.")
-        if service.is_running():
+        print(f"Service status: {service.status.state.value}")  
+        print(f"Prediction URI: {service.prediction_url}")      
+        print(f"Service UUID: {service.uuid}")
+        if service.is_running:
             print(
                 "The MLFLOW prediction service is running as daemon"
                 "process services and accepts interface requests at"
@@ -79,7 +84,7 @@ def run_deployment(config : str, min_accuracy : float) -> None:
                 f"[italic green]`zenml model-deployer model delete`[/italic green]"
                 f"{str(service.uuid)}"
             )
-        elif service.is_failed():
+        elif service.is_failed:
             print("The service failed to start."
                   f"last state: {service.status.state.value}"
                   f"last error: {service.status.last_error}"
@@ -87,8 +92,9 @@ def run_deployment(config : str, min_accuracy : float) -> None:
             
         else:
             print(
-                "The MLFLOW prediction service is not running."
+                "The MLFLOW prediction service is not running."          
             )
+            print(f"Current service state: {service.status.state.value}")
     else:
         print("No model server found.")
         print(
@@ -96,7 +102,7 @@ def run_deployment(config : str, min_accuracy : float) -> None:
             f"[italic green]`zenml model-deployer models start`[/italic green]."
         )
 
-# 6a81c921c6cd0eda7c429f86a07a77f915f485ba
+
 if __name__ == "__main__":
     run_deployment()
   
