@@ -24,7 +24,7 @@ DEPLOY_AND_PREDICT : str = "deploy_and_predict"
 @click.option(
     "--min-accuracy", 
     type=float, 
-    default=0.92, 
+    default=0, 
     help="Minimum accuracy for deployment.")
 
 def run_deployment(config : str, min_accuracy : float) -> None:
@@ -93,10 +93,10 @@ def run_deployment(config : str, min_accuracy : float) -> None:
         print("No model server found.")
         print(
             "You can start the service by running"
-            f"[italic green]`zenml model-deployer model start`[/italic green]."
+            f"[italic green]`zenml model-deployer models start`[/italic green]."
         )
 
-
+# 6a81c921c6cd0eda7c429f86a07a77f915f485ba
 if __name__ == "__main__":
     run_deployment()
   

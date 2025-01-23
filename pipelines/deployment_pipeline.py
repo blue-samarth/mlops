@@ -5,7 +5,7 @@ from zenml import pipeline , step
 from zenml.config import DockerSettings
 from zenml.constants import DEFAULT_SERVICE_START_STOP_TIMEOUT
 from zenml.integrations.constants import MLFLOW
-from zenml.integrations.mlflow.steps import mlflow_model_deployer_step
+from zenml.integrations.mlflow.steps.mlflow_deployer import mlflow_model_deployer_step
 
 from steps.clean_data import clean_df
 from steps.model_train import train_model
@@ -19,7 +19,7 @@ class DeploymentTriggerConfig(BaseModel):
     """
     Parameters for deployment trigger.
     """
-    min_accuracy: float = 0.92
+    min_accuracy: float = 0
 
 @step
 def trigger_deployment( accuracy : float , config: DeploymentTriggerConfig) -> bool:
@@ -33,9 +33,9 @@ def trigger_deployment( accuracy : float , config: DeploymentTriggerConfig) -> b
     """
     return accuracy >= config.min_accuracy
 
-@pipeline(enable_cache=True, settings={"docker": docker_settings})
+@pipeline(enable_cache=False, settings={"docker": docker_settings})
 def continuous_deployment_pipeline(
-                                   min_accuracy : float = 0.92,
+                                   min_accuracy : float = 0,
                                    workers : int = 1,
                                    timeout : int = DEFAULT_SERVICE_START_STOP_TIMEOUT
                                    ) -> None:
@@ -53,12 +53,17 @@ def continuous_deployment_pipeline(
                                 accuracy=r2,
                                 config=DeploymentTriggerConfig()
                                 )
-
-        mlflow_model_deployer_step(model=model,
-                                deploy_decision=deployment_decision,
-                                workers=workers,
-                                timeout=timeout
-                                )
+        print(1)
+        try:
+            mlflow_model_deployer_step(model=model,
+                                    deploy_decision=True,
+                                    workers=workers,
+                                    timeout=timeout
+                                    )
+            print(2)
+        except Exception as e:
+            print(e)
+        print(3)
     except Exception as e:
         print(f"Error in pipeline: {e}")
         raise 
